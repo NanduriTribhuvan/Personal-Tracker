@@ -131,6 +131,7 @@ export function OverviewPage() {
             />
             <StatCard label="Average odds" loading={loading} icon={<Sigma />} value={odds(s.averageOdds)} sub="Decimal, all selected bets" />
             <StatCard
+              className="col-span-2 lg:col-span-1"
               label="Best bet"
               loading={loading}
               tone={s.bestBet ? 'profit' : 'neutral'}
