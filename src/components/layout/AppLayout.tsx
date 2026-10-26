@@ -140,7 +140,7 @@ export function AppLayout() {
       >
         <div className="mx-auto grid h-16 max-w-md grid-cols-5 items-center px-1">
           {NAV_ITEMS.slice(0, 2).map((item) => (
-            <MobileNavItem key={item.to} {...item} />
+            <MobileNavItem key={item.to} item={item} />
           ))}
           <div className="flex justify-center">
             <button
@@ -153,7 +153,7 @@ export function AppLayout() {
             </button>
           </div>
           {NAV_ITEMS.slice(2, 4).map((item) => (
-            <MobileNavItem key={item.to} {...item} />
+            <MobileNavItem key={item.to} item={item} />
           ))}
         </div>
       </nav>
@@ -188,11 +188,12 @@ function MainContent() {
   return <Outlet />;
 }
 
-function MobileNavItem({ to, label, icon: Icon, ...rest }: (typeof NAV_ITEMS)[number]) {
+function MobileNavItem({ item }: { item: (typeof NAV_ITEMS)[number] }) {
+  const { to, label, icon: Icon } = item;
   return (
     <NavLink
       to={to}
-      end={'end' in rest}
+      end={'end' in item}
       className={({ isActive }) =>
         cn(
           'flex h-14 flex-col items-center justify-center gap-1 rounded-xl text-[10.5px] font-medium transition-colors',

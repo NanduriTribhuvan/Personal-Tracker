@@ -54,7 +54,7 @@ export function OverviewPage() {
   const recent = React.useMemo(() => bets.slice(0, 6), [bets]);
 
   const odds = (v: number | null) => (v === null ? '—' : formatOdds(v, settings.oddsPrecision));
-  const tone = (v: number) => (v > 0.004 ? 'profit' : v < -0.004 ? 'loss' : 'neutral') as const;
+  const tone = (v: number): 'profit' | 'loss' | 'neutral' => (v > 0.004 ? 'profit' : v < -0.004 ? 'loss' : 'neutral');
 
   const greeting = React.useMemo(() => {
     const h = new Date().getHours();

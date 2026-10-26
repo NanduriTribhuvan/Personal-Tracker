@@ -19,12 +19,11 @@ export class SupabaseAuthService implements AuthService {
   ) {}
 
   private async toAuthUser(user: User): Promise<AuthUser> {
-    let username = this.usernameCache.get(user.id);
-    if (!username) {
-      const { data } = await this.client.from('profiles').select('username').eq('id', user.id).maybeSingle<{ username: string }>();
-      username = data?.username ?? (user.user_metadata?.username as string | undefined) ?? 'You';
-      this.usernameCache.set(user.id, username);
-    }
+    const cached = this.usernameCache.get(user.id);
+    if (cached) return { id: user.id, username: cached };
+    const { data } = await this.client.from('profiles').select('username').eq('id', user.id).maybeSingle<{ username: string }>();
+    const username: string = data?.username ?? (user.user_metadata?.username as string | undefined) ?? 'You';
+    this.usernameCache.set(user.id, username);
     return { id: user.id, username };
   }
 
